@@ -1,5 +1,3 @@
-#tor@openstack.eti.br
-#
 # trusty-docker-openstack
 OpenStack Demo for Ubuntu trusty by Ansible and Docker
 
@@ -15,13 +13,25 @@ OpenStack components that run on *controller* uses Docker container.
 My development environment is shown below. I think that Ubuntu LinuxBox also works.
 
     $ cat /etc/redhat-release
+    CentOS Linux release 7.1.1503 (Core)
     $ uname -a
+    Linux zouk.local 3.10.0-229.1.2.el7.x86_64 #1 SMP Fri Mar 27 03:04:26 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
     $ cat /proc/meminfo | head -6
+    MemTotal:       16243556 kB
+    MemFree:          153060 kB
+    MemAvailable:    7363000 kB
+    Buffers:            4076 kB
+    Cached:          7484732 kB
+    SwapCached:        15380 kB
     $ vboxmanage --version
+    4.3.26r98988
     $ vagrant --version
+    Vagrant 1.7.2
     $ ansible --version
+    ansible 1.9.0.1
       configured module search path = None
     $ vagrant box list
+    ubuntu/trusty64 (virtualbox, 0)
 
 My Vagrant base box 'ubuntu/trusty64' obtained from the following.
 https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
@@ -31,12 +41,12 @@ https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-am
 1. Modify the following part in `ansible/group_vars/all` so that it fits your environment.(see previous picture.)
 
     ```
-    neutron_ext_subnet_allocation_pool_start: 10.0.0.240
-    neutron_ext_subnet_allocation_pool_end: 10.0.0.249
-    neutron_ext_subnet_gateway: 10.0.0.1
-    neutron_ext_subnet_cidr: 10.0.0.0/24
-    neutron_demo_subnet_gateway: 10.0.99.1
-    neutron_demo_subnet_cidr: 10.0.99.0/24
+    neutron_ext_subnet_allocation_pool_start: 192.168.1.240
+    neutron_ext_subnet_allocation_pool_end: 192.168.1.249
+    neutron_ext_subnet_gateway: 192.168.1.1
+    neutron_ext_subnet_cidr: 192.168.1.0/24
+    neutron_demo_subnet_gateway: 192.168.99.1
+    neutron_demo_subnet_cidr: 192.168.99.0/24
     ```
 
 1. run `vagrant up` and `vagrant reload`
@@ -57,7 +67,7 @@ https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-am
 1. Open the dashboard with the browser and login.
 
     ```
-    http://(VirtualBox host):60080/horizon/avth/login/
+    http://(VirtualBox host):60080/horizon/auth/login/
 
     openstack_admin_password: openstack
     openstack_demo_password: openstack
